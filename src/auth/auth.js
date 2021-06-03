@@ -23,4 +23,28 @@ const auth = passport.authenticate('auth', {
     session: false,
 })
 
-module.exports = { auth }
+passport.use('user', new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: config.secret,
+}, async(payload, done) => {
+
+    try {
+
+        const user = await User.findById(payload.sub)
+
+        if (!user) {
+            done(null, false)
+        } else {
+            done(null, user)
+        }
+
+    } catch (error) {
+        done(error, false)
+    }
+}))
+
+const user = passport.authenticate('user', {
+    session: false,
+})
+
+module.exports = { auth, user }

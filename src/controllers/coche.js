@@ -1,5 +1,6 @@
 const cocheController = {}
 const Coche = require('../models/coche')
+const Favorito = require('../models/favorito')
 const cocheValidator = require('../validators/coche')
 
 
@@ -74,7 +75,27 @@ cocheController.all = async(req, res) => {
 
             var myAggregate = Coche.aggregate();
 
-            var coches = await Coche.aggregatePaginate(myAggregate, options).then({})
+            var coches = await Coche.aggregatePaginate(myAggregate, options)
+
+            // console.log(coches)
+            if (req.user) {
+                var favoritos = await Favorito.find({ usuario: req.user._id })
+                let fav = []
+                for (const favorito of favoritos) {
+                    fav.push(String(favorito.coche))
+                }
+                if (fav.length > 0) {
+                    for (const coche of coches.docs) {
+                        if (fav.includes(String(coche._id))) {
+                            //do something
+                            coche.favorito = true
+                        } else {
+                            coche.favorito = false
+                        }
+                    }
+                }
+            }
+
 
             /*const coches = await Coche.find()*/
 
@@ -183,7 +204,25 @@ cocheController.all = async(req, res) => {
                 ]
             );
 
-            var coches = await Coche.aggregatePaginate(myAggregate, options).then({})
+            var coches = await Coche.aggregatePaginate(myAggregate, options)
+
+            if (req.user) {
+                var favoritos = await Favorito.find({ usuario: req.user._id })
+                let fav = []
+                for (const favorito of favoritos) {
+                    fav.push(String(favorito.coche))
+                }
+                if (fav.length > 0) {
+                    for (const coche of coches.docs) {
+                        if (fav.includes(String(coche._id))) {
+                            //do something
+                            coche.favorito = true
+                        } else {
+                            coche.favorito = false
+                        }
+                    }
+                }
+            }
 
             res.json(coches)
         }

@@ -5,9 +5,8 @@ const Favorito = require('../models/favorito')
 
 favoritoController.getFavs = async(req, res) => {
     const usuario = req.user._id
-
     try {
-        const favoritos = await Favorito.find({ usuario: usuario })
+        const favoritos = await Favorito.find({ usuario: usuario }).populate("coche")
         res.json(favoritos)
     } catch (err) {
         console.log(err)
@@ -40,15 +39,28 @@ favoritoController.addFav = async(req, res) => {
 
     if (coche && usuario) {
         try {
-            const favorito = new Favorito({ usuario: usuario_id, coche: coche_id })
-            await favorito.save()
-            res.send({ status: "ok" })
+            const favoritonew = new Favorito({ usuario: usuario_id, coche: coche_id })
+            await favoritonew.save()
+            res.send({ status: "ok", accion: "agregar" })
+
         } catch (err) {
             console.log(err)
             res.status(500).send(err.message)
         }
     }
 
+}
+
+favoritoController.deleteFav = async(req, res) => {
+    const idCoche = req.params.id
+    const user = req.user._id
+    try {
+        const favorito = await Favorito.findOneAndDelete({ usuario: user, coche: idCoche })
+        res.json(favorito)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send(err.message)
+    }
 }
 
 
