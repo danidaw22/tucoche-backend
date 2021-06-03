@@ -279,7 +279,7 @@ cocheController.update = async(req, res) => {
 cocheController.getCoche = async(req, res) => {
     const id = req.params.id
     try {
-        const coche = await Coche.findById(id)
+        const coche = await Coche.findById(id).populate('usuario')
         res.json(coche)
     } catch (err) {
         console.log(err)

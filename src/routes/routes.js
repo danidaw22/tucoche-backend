@@ -3,6 +3,7 @@ const router = express.Router()
 const usuarioController = require('../controllers/usuario.js')
 const cocheController = require('../controllers/coche')
 const favoritoController = require('../controllers/favorito')
+const mailerController = require("../controllers/mailer")
 const passport = require('../auth/auth')
 
 //Rutas usuario
@@ -27,5 +28,9 @@ router.delete("/favorito/:id", passport.auth, favoritoController.deleteFav)
 router.get("/perfil", passport.auth, usuarioController.perfil)
 router.get("/panel", passport.auth, cocheController.panel)
 router.put("/perfilUpdated", passport.auth, usuarioController.perfilUpdated)
+
+//Rutas email
+
+router.post("/emailContacto", mailerController.contacto)
 
 module.exports = router
