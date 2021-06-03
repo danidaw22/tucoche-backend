@@ -19,7 +19,8 @@ cocheController.addCoche = async(req, res) => {
         plazas: req.body.plazas,
         cambio: req.body.cambio,
         anno: req.body.anno,
-        photo: req.body.photo
+        photo: req.body.photo,
+        galeria: req.body.galeria
     }
 
     const validation = cocheValidator.validate(dataCoche)
@@ -212,6 +213,7 @@ cocheController.update = async(req, res) => {
         cambio: req.body.cambio,
         anno: req.body.anno,
         photo: req.body.photo,
+        galeria: req.body.galeria,
         updatedAt: Date.now()
     }
 

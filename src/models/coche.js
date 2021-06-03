@@ -18,6 +18,7 @@ const Schema = new SchemaMongo({
     cambio: { type: String },
     anno: { type: Number },
     photo: { type: String },
+    galeria: { type: [String] },
     savedAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 })
