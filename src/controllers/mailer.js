@@ -19,13 +19,14 @@ mailerController.contacto = async(req, res) => {
         const telefono = req.body.telefono
         const comentario = req.body.comentario
         const titulo = req.body.titulo
+        const nombre = req.body.nombreAnunciante
         const subject = `losCar contacto`
             // Descomentar en producción
             //const destination = req.body.emailCoche
         const destination = "danidaw2019@gmail.com"
 
-        const locals = { name: name, email: email, telefono: telefono, comentario: comentario, titulo: titulo }
-        const html = await emailObj.render('contacto.pug', locals)
+        const locals = { name: name, email: email, telefono: telefono, comentario: comentario, titulo: titulo, nombre: nombre }
+        const html = await emailObj.render('emailContacto.pug', locals)
             //console.log(html)
         await mailer.send(subject, destination, html)
         res.status(204).send()
