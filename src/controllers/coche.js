@@ -128,7 +128,7 @@ cocheController.all = async(req, res) => {
                 and.push({
                     precio: {
                         $gte: Number(precioInicial),
-                        $lt: Number(precioFinal)
+                        $lte: Number(precioFinal)
                     }
                 })
             }
@@ -137,7 +137,7 @@ cocheController.all = async(req, res) => {
                 and.push({
                     anno: {
                         $gte: Number(annoInicial),
-                        $lt: Number(annoFinal)
+                        $lte: Number(annoFinal)
                     }
                 })
             }
@@ -164,7 +164,7 @@ cocheController.all = async(req, res) => {
                 and.push({
                     km: {
                         $gte: Number(kmInicial),
-                        $lt: Number(kmFinal)
+                        $lte: Number(kmFinal)
                     }
                 })
             }
